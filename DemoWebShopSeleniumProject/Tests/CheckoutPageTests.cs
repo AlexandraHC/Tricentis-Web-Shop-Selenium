@@ -20,7 +20,7 @@ namespace DemoWebShopSeleniumProject.Tests
             base.Setup();
             LoginPage login = new LoginPage(_driver);
             login.NavigateToLogin();
-            login.Login("alexjho@example.com", "Jass12@");
+            login.Login("mathytest@example.com", "Math12@");
 
             ShoppingCartPage shoppingcart = new ShoppingCartPage(_driver);
             shoppingcart.NavigateToHompageLink();

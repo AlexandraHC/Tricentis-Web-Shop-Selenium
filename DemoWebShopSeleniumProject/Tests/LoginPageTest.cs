@@ -26,7 +26,7 @@ namespace DemoWebShopSeleniumProject.Tests
         {
             LoginPage login = new LoginPage(_driver);
             login.NavigateToLogin();
-            login.Login("alexjho@example.com", "Jass12@");
+            login.Login("brasmith@example.com", "BraSmi@@");
 
             Assert.IsTrue(login.IsLoggedIn());
         }

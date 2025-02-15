@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Firefox;
 
 namespace DemoWebShopSeleniumProject.PageObjects
 {
@@ -17,15 +18,14 @@ namespace DemoWebShopSeleniumProject.PageObjects
         }
 
         public IWebElement ShoppingCartLink => _driver.FindElement(By.LinkText("Shopping cart"));
-        public IWebElement HomepageLink => _wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("body > div.master-wrapper-page > div.master-wrapper-content > div.header > div.header-logo > a > img")));
+        public IWebElement HomepageLink => _wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("img[alt='Tricentis Demo Web Shop']")));
         public IEnumerable<IWebElement> Products => _driver.FindElements(By.ClassName("product-item"));
         public IWebElement LaptopProductContainer => Products.FirstOrDefault(p => p.GetAttribute("data-productid") == "31");
         public IWebElement AddLaptopProduct => LaptopProductContainer.FindElement(By.ClassName("product-box-add-to-cart-button"));
-        public IWebElement TermsAndConditionsBtn => LaptopProductContainer.FindElement(By.Id("termsofservice"));
+        public IWebElement TermsAndConditionsBtn => _driver.FindElement(By.Id("termsofservice"));
         public IWebElement CartItem => _wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("cart-item-row")));
         public IWebElement LaptopItem => CartItem.FindElement(By.LinkText("14.1-inch Laptop"));
-        public IWebElement RemoveFromCartContainer => _driver.FindElement(By.ClassName("remove-from-cart"));
-        public IWebElement RemoveFromCartCheckbox => RemoveFromCartContainer.FindElement(By.Name("removefromcart"));
+        public IWebElement RemoveFromCartCheckbox => _driver.FindElement(By.Name("removefromcart"));
         public IWebElement EmptyShoppingCartContainer => _wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("order-summary-content")));
         public IWebElement ItemQuantity => _wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("qty-input")));
         public IWebElement UpdateCartBtn => _driver.FindElement(By.ClassName("update-cart-button"));
@@ -38,13 +38,22 @@ namespace DemoWebShopSeleniumProject.PageObjects
         public IWebElement EstimateShippingText => _driver.FindElement(By.ClassName("option-description"));
 
         // method used to remove products from previous tests from cart 
-        private void ClearTheCart()
+        public void ClearTheCart()
         {
-            foreach (var el in _driver.FindElements(By.Name("removefromcart")))
+            NavigateToShoppingCartLink();
+
+            var removeFromCartElements = _driver.FindElements(By.Name("removefromcart"));
+            foreach (var el in removeFromCartElements)
             {
                 el.Click();
             }
-            UpdateCart();
+
+            if (removeFromCartElements.Any())
+            {
+                UpdateCart();
+            }
+
+            NavigateToHompageLink();
         }
 
         public bool IsShoppingCartEmpty()
@@ -106,8 +115,15 @@ namespace DemoWebShopSeleniumProject.PageObjects
 
         public bool IsCartProductSubtotalUpdated(string expectedValue)
         {
-            var cartSubTotalValue = GetCartProductSubtotalUpdatedValue();
-            return string.Equals(cartSubTotalValue, expectedValue, StringComparison.CurrentCultureIgnoreCase);
+            var actualValue = CartProductSubtotal.Text;
+
+            // special case for Firefox
+            if (_driver is FirefoxDriver)
+            {
+                actualValue = GetCartProductSubtotalUpdatedValue();
+            }
+
+            return string.Equals(actualValue, expectedValue, StringComparison.CurrentCultureIgnoreCase);
         }
 
         public void SelectACountryFromDropdown(string text)

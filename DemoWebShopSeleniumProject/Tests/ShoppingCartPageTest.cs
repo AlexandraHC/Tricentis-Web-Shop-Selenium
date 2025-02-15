@@ -28,7 +28,7 @@ namespace DemoWebShopSeleniumProject.Tests
         public void TestShoppingCart()
         {
             ShoppingCartPage shoppingcart = new ShoppingCartPage(_driver);
-            shoppingcart.NavigateToHompageLink();
+            shoppingcart.ClearTheCart();
             shoppingcart.AddAProductToCart();
             shoppingcart.NavigateToShoppingCartLink();
             Assert.IsTrue(shoppingcart.IsLaptopItemDisplayed());
@@ -38,7 +38,7 @@ namespace DemoWebShopSeleniumProject.Tests
         public void RemoveAnItemFromCart()
         {
             ShoppingCartPage shoppingcart = new ShoppingCartPage(_driver);
-            shoppingcart.NavigateToHompageLink();
+            shoppingcart.ClearTheCart();
             shoppingcart.AddAProductToCart();
             shoppingcart.NavigateToShoppingCartLink();
             shoppingcart.RemoveTheItemFromCart();
@@ -47,10 +47,10 @@ namespace DemoWebShopSeleniumProject.Tests
         }
 
         [Test]
-        public void IncreseTheQuantityForAproduct()
+        public void IncreseTheQuantityForAProduct()
         {
             ShoppingCartPage shoppingcart = new ShoppingCartPage(_driver);
-            shoppingcart.NavigateToHompageLink();
+            shoppingcart.ClearTheCart();
 
             var prodQuantity = 3;
             var prodPrice = shoppingcart.GetLaptopProductPrice();
@@ -68,7 +68,7 @@ namespace DemoWebShopSeleniumProject.Tests
         public void InsertAdestinationForShippingDelivery()
         {
             ShoppingCartPage shoppingcart = new ShoppingCartPage(_driver);
-            shoppingcart.NavigateToHompageLink();
+            shoppingcart.ClearTheCart();
             shoppingcart.AddAProductToCart();
             shoppingcart.NavigateToShoppingCartLink();
 
@@ -81,7 +81,7 @@ namespace DemoWebShopSeleniumProject.Tests
         public void AddToCartAGiftCard()
         {
             ShoppingCartPage shoppingcart = new ShoppingCartPage(_driver);
-            shoppingcart.NavigateToHompageLink();
+            shoppingcart.ClearTheCart();
 
             GiftCardsPage giftCard = new GiftCardsPage(_driver);
             giftCard.NavigateToGiftCardCategory();
