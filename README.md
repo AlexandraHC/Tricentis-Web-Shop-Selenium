@@ -1,1 +1,1 @@
-# Tricentis-Web-Shop-Selenium
+Automated tests using Selenium and C#. Sandbox used: https://demowebshop.tricentis.com/
