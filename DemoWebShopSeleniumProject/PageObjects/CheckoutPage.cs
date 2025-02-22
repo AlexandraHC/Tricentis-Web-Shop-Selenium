@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using DemoWebShopSeleniumProject.Tests.Common;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
@@ -23,8 +24,12 @@ namespace DemoWebShopSeleniumProject.PageObjects
         public IWebElement TxtLastName => _driver.FindElement(By.Id("BillingNewAddress_LastName"));
         public IWebElement TxtEmail => _driver.FindElement(By.Id("BillingNewAddress_Email"));
         public IWebElement TxtCompany => _driver.FindElement(By.Id("BillingNewAddress_Company"));
-        public By CountryDropdownLocator => By.Id("BillingNewAddress_CountryId");
-        public SelectElement CountrySelect => new SelectElement(_wait.Until(ExpectedConditions.ElementIsVisible(CountryDropdownLocator)));
+        public By BillingCountryDropdownLocator => By.Id("BillingNewAddress_CountryId");
+        public SelectElement BillingCountrySelect => new SelectElement(_wait.Until(ExpectedConditions.ElementToBeClickable(BillingCountryDropdownLocator)));
+        public By BillingAddressLocator => By.Id("billing-address-select");
+        public SelectElement BillingAddressSelect => new SelectElement(_wait.Until(ExpectedConditions.ElementToBeClickable(BillingAddressLocator)));
+        public By ShippingCountryDropdownNewAdress => By.Id("shipping-address-select");
+        public SelectElement ShippingAddressSelect => new SelectElement(_wait.Until(ExpectedConditions.ElementToBeClickable(ShippingCountryDropdownNewAdress)));
         public IWebElement TxtCity => _driver.FindElement(By.Id("BillingNewAddress_City"));
         public IWebElement TxtFirstAddress => _driver.FindElement(By.Id("BillingNewAddress_Address1"));
         public IWebElement TxtSecondAddress => _driver.FindElement(By.Id("BillingNewAddress_Address2"));
@@ -43,30 +48,21 @@ namespace DemoWebShopSeleniumProject.PageObjects
             CheckoutBtn.Click();
         }
    
-        public void FillInCheckoutForm(string firstName, string lastName, string email, string company, string city,
+        public void FillInCheckoutForm(string firstName, string lastName, string email, string company, string country, string city,
                       string firstAddresss, string secondAddresss, string postalCode, string phoneNumber, string faxNumber)
 
         {
-            TxtFirstAddress.Clear();
-            TxtFirstName.SendKeys(firstName);
-            TxtLastName.Clear();
-            TxtLastName.SendKeys(lastName);
-            TxtEmail.Clear();
-            TxtEmail.SendKeys(email);
-            TxtCompany.Clear();
-            TxtCompany.SendKeys(company);
-            TxtCity.Clear();
-            TxtCity.SendKeys(city);
-            TxtFirstAddress.Clear();
-            TxtFirstAddress.SendKeys(firstAddresss);
-            TxtSecondAddress.Clear();
-            TxtSecondAddress.SendKeys(secondAddresss);
-            TxtPostalCode.Clear();
-            TxtPostalCode.SendKeys(postalCode);
-            TxtPhoneNumber.Clear();
-            TxtPhoneNumber.SendKeys(phoneNumber);
-            TxtFaxNumber.Clear();
-            TxtFaxNumber.SendKeys(faxNumber);
+            HelperMethods.SendKeysToElement(TxtFirstName, firstName);
+            HelperMethods.SendKeysToElement(TxtLastName, lastName);
+            HelperMethods.SendKeysToElement(TxtEmail, email);
+            HelperMethods.SendKeysToElement(TxtCompany, company);
+            BillingCountrySelect.SelectByText(country);
+            HelperMethods.SendKeysToElement(TxtCity, city);
+            HelperMethods.SendKeysToElement(TxtFirstAddress, firstAddresss);
+            HelperMethods.SendKeysToElement(TxtSecondAddress, secondAddresss);
+            HelperMethods.SendKeysToElement(TxtPostalCode, postalCode);
+            HelperMethods.SendKeysToElement(TxtPhoneNumber, phoneNumber);
+            HelperMethods.SendKeysToElement(TxtFaxNumber, faxNumber);
             ContinueBtn.Click();
         }
 
@@ -75,14 +71,14 @@ namespace DemoWebShopSeleniumProject.PageObjects
             return CheckoutBillingSteps.Displayed;
         }
 
-        public void SelectACountryFromDropdown(string country)
+        public void SelectNewShippingAddressFromDropdown(string address)
         {
-            CountrySelect.SelectByText(country);
+            ShippingAddressSelect.SelectByText(address);
         }
 
-
-    
-    
-    
+        public void SelectNewBillingAddressFromDropdown(string address)
+        {
+            BillingAddressSelect.SelectByText(address);
+        }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DemoWebShopSeleniumProject.Driver;
+﻿using DemoWebShopSeleniumProject.Driver;
 using DemoWebShopSeleniumProject.PageObjects;
 using DemoWebShopSeleniumProject.PageObjects.Categories;
 using DemoWebShopSeleniumProject.Tests.Common;

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using DemoWebShopSeleniumProject.Tests.Common;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
@@ -65,16 +66,11 @@ public class RegisterPage
         string confirmedPassword)
     {
         GenderFemaleRadioButton.Click();
-        TxtFirstName.Clear();
-        TxtFirstName.SendKeys(firstName);
-        TxtLastName.Clear();
-        TxtLastName.SendKeys(lastName);
-        TxtEmail.Clear();
-        TxtEmail.SendKeys(email);
-        TxtPassword.Clear();
-        TxtPassword.SendKeys(password);
-        TxtConfirmingPassword.Clear();
-        TxtConfirmingPassword.SendKeys(confirmedPassword);
+        HelperMethods.SendKeysToElement(TxtFirstName, firstName);
+        HelperMethods.SendKeysToElement(TxtLastName, lastName);
+        HelperMethods.SendKeysToElement(TxtEmail, email);
+        HelperMethods.SendKeysToElement(TxtPassword, password);
+        HelperMethods.SendKeysToElement(TxtConfirmingPassword, confirmedPassword);
     }
 
     public void FillInRegisterForm(string firstName, string lastName, string password, string confirmedPassword)
@@ -83,16 +79,11 @@ public class RegisterPage
         var email = email_start + "@example.com";
 
         GenderFemaleRadioButton.Click();
-        TxtFirstName.Clear();
-        TxtFirstName.SendKeys(firstName);
-        TxtLastName.Clear();
-        TxtLastName.SendKeys(lastName);
-        TxtEmail.Clear();
-        TxtEmail.SendKeys(email);
-        TxtPassword.Clear();
-        TxtPassword.SendKeys(password);
-        TxtConfirmingPassword.Clear();
-        TxtConfirmingPassword.SendKeys(confirmedPassword);
+        HelperMethods.SendKeysToElement(TxtFirstName, firstName);
+        HelperMethods.SendKeysToElement(TxtLastName, lastName);
+        HelperMethods.SendKeysToElement(TxtEmail, email);
+        HelperMethods.SendKeysToElement(TxtPassword, password);
+        HelperMethods.SendKeysToElement(TxtConfirmingPassword, confirmedPassword);
     }
 
     public bool IsRegistered()

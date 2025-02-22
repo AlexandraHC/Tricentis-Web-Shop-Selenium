@@ -34,9 +34,13 @@ namespace DemoWebShopSeleniumProject.Tests
             CheckoutPage checkout = new CheckoutPage(_driver);
             checkout.AcceptTermsAndConditions();
             checkout.ClickOnCheckoutButton();
-            //checkout.FillInCheckoutForm("Test", "Jhoha", "alexjho@example.com", "WebSolutions", "Sydney", 
-             //   "Str.12 C", "Australia", "805960", "0255504321", "+61526");
-            //checkout.SelectAcountryFromDropdown("Australia");
+
+            checkout.SelectNewBillingAddressFromDropdown("New Address");
+            checkout.FillInCheckoutForm("Test", "Jhoha", "alexjho@example.com", "WebSolutions", "Anguilla", "Sydney",
+                "Str.12 C", "Australia", "805960", "0255504321", "+61526");
+
+            checkout.SelectNewShippingAddressFromDropdown("New Address");
+
         }
     }
 }
